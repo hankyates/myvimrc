@@ -19,15 +19,19 @@ Bundle 'msanders/snipmate.vim.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-git.git'
 Bundle 'ervandew/supertab.git'
+Bundle 'endel/vim-github-colorscheme'
 "Bundle 'mileszs/ack.vim.git'
 Bundle 'tjennings/git-grep-vim'
-Bundle 'sjl/gundo.vim.git'
-Bundle 'vim-scripts/TaskList.vim.git'
+"Bundle 'sjl/gundo.vim.git'
+"Bundle 'vim-scripts/TaskList.vim.git'
 "Bundle 'majutsushi/tagbar'
 Bundle 'int3/vim-taglist-plus'
-Bundle 'rson/vim-conque'
 Bundle 'nono/vim-handlebars'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'vim-scripts/ZenCoding.vim'
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
+Bundle 'duff/vim-scratch'
 
 " Ruby Related Bundles
 Bundle 'tpope/vim-rails'
@@ -66,19 +70,20 @@ augroup AutoReloadVimRC
   au BufWritePost $MYVIMRC so $MYVIMRC
 augroup END
 
-set nu
-
 " Statusline Settings
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%{SyntasticStatuslineFlag()}%=%-14.(%l,%c%V%)\ %P
 
 " Text settings
 syntax enable
+set guifont=Consolas:h21
 colors zenburn
 let g:zenburn_high_Contrast=1
 set t_Co=256
 hi NonText ctermfg=7 guifg=gray
 set listchars=eol:\|,tab:\|\ ,trail:~,extends:>,precedes:<
 set hls
+set nowrap
+set nu
 
 " Spacing related settings
 set softtabstop=2 tabstop=2 shiftwidth=2 expandtab
@@ -92,10 +97,7 @@ set guioptions+=TlLrRbB
 set guioptions-=TlLrRbB
 
 " Filetype Settings
-au FileType ruby,eruby,haml
-  \ set softtabstop=2 |
-  \ set tabstop=2 |
-  \ set shiftwidth=2 |
+au FileType ruby,haml
   \ set omnifunc=rubycomplete#Complete |
   \ let g:rubycomplete_buffer_loading = 1 |
   \ let g:rubycomplete_rails = 1 |
@@ -107,7 +109,6 @@ au FileType python
   \ set softtabstop=4 |
   \ set tabstop=4 |
   \ set shiftwidth=4
-
 
 " Sets and Lets
 let g:miniBufExplSplitBelow=0
@@ -126,26 +127,25 @@ map <c-h> <c-w>h
 " User Mappings
 map <Leader>wr :set wrap!<CR>
 map <Leader><Tab> :NERDTreeToggle<CR>
-map <Leader>\ :MiniBufExplorer<CR>
+map <Leader>\ :!
 map <Leader>mm :TMiniBufExplorer<CR>
-map <Leader>tt <Plug>TaskList
-map <Leader>gg :GundoToggle<CR>
 map <Leader>aa :GitGrep 
 map <Leader>as :GitGrep <cword><CR>
 map <Leader>sr :call ReloadAllSnippets()<CR>
-map <Leader>` :TlistToggle<CR>
+map <Leader>! :TlistToggle<CR>
+map <Leader>e :Vexplore<CR>
 
 " Git Commands
 map <Leader>ga :Gwrite<CR>
 map <Leader>gc :Gcommit<CR>
-map <Leader>gs :TMiniBufExplorer<CR>:Gstatus<CR>
+map <Leader>gs :CMiniBufExplorer<CR>:Gstatus<CR>
 map <Leader>gd :Gdiff<CR>
 
 " FuzzyFinder Binds
-map <Leader>ww :FufCoverageFile<CR>
+map <Leader>w :FufCoverageFile<CR>
 
-map <Leader>] :colors morning<CR>
-map <Leader>[ :colors zenburn<CR>
+map <Leader>[ :colors Zenburn<CR>:set guifont=Consolas:h21<CR>
+map <Leader>] :colors github<CR>:set guifont=Courier:h21<CR>
 
 " Spacing Binds
 map <Leader>ll :set list!<CR>
@@ -171,12 +171,14 @@ map <Leader>re  :call g:RubyDebugger.exit()<CR>
 map <Leader>rd  :call g:RubyDebugger.remove_breakpoints()<CR>
 map <Leader>re :RdbEval 
 map <Leader>rl :RdbLog<CR>
+
+"Amex debugger Restart
 map <Leader>rr :RdbStop<CR>:Rdebugger 'script/rails s'<CR>
 
 "Syntastic 
 map <Leader>se :Errors<CR>
 map <Leader>sc :SyntasticCheck<CR>
-
-" Conque Binds
-map <Leader>sh :ConqueTermVSplit bash<CR> 
-map <Leader>sw :ConqueTerm bash<CR> 
+let g:syntastic_javascript_jsl_conf = $HOME . '/.vim/jsl.conf'
+let g:gist_detect_filetype = 1
+let g:gist_open_browser_after_post = 1
+set clipboard=unnamed
