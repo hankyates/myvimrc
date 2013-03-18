@@ -34,8 +34,8 @@ Bundle 'mattn/gist-vim'
 Bundle 'duff/vim-scratch'
 
 " Ruby Related Bundles
-Bundle 'tpope/vim-rails'
-Bundle 'astashov/vim-ruby-debugger'
+"Bundle 'tpope/vim-rails'
+"Bundle 'astashov/vim-ruby-debugger'
 
 " Python Related Bundles
 "Bundle 'gotcha/vimpdb'
@@ -96,14 +96,6 @@ set foldlevel=99
 set guioptions+=TlLrRbB
 set guioptions-=TlLrRbB
 
-" Filetype Settings
-au FileType ruby,haml
-  \ set omnifunc=rubycomplete#Complete |
-  \ let g:rubycomplete_buffer_loading = 1 |
-  \ let g:rubycomplete_rails = 1 |
-  \ let g:rubycomplete_classes_in_global = 1 |
-  \ hi Pmenu ctermbg=238 gui=bold 
-
 au FileType python 
   \ set omnifunc=pythoncomplete#Complete |
   \ set softtabstop=4 |
@@ -114,7 +106,6 @@ au FileType python
 let g:miniBufExplSplitBelow=0
 let g:miniBufExplMaxSize=0
 let g:SuperTabDefaultCompletionType = "<c-p>"
-let g:ruby_debugger_progname = 'mvim'
 set completeopt=menuone,longest,preview
 set omnifunc=syntaxcomplete#Complete
 
@@ -158,27 +149,9 @@ map <Leader>bi :BundleInstall<CR>
 map <Leader>bu :BundleInstall!<CR>
 map <Leader>bc :BundleClean<CR>
 
-"Ruby Debugger 
-map <Leader>rb  :call g:RubyDebugger.toggle_breakpoint()<CR>
-map <Leader>rv  :call g:RubyDebugger.open_variables()<CR>
-map <Leader>rm  :call g:RubyDebugger.open_breakpoints()<CR>
-map <Leader>rt  :call g:RubyDebugger.open_frames()<CR>
-map <Leader>rs  :call g:RubyDebugger.step()<CR>
-map <Leader>rf  :call g:RubyDebugger.finish()<CR>
-map <Leader>rn  :call g:RubyDebugger.next()<CR>
-map <Leader>rc  :call g:RubyDebugger.continue()<CR>
-map <Leader>re  :call g:RubyDebugger.exit()<CR>
-map <Leader>rd  :call g:RubyDebugger.remove_breakpoints()<CR>
-map <Leader>re :RdbEval 
-map <Leader>rl :RdbLog<CR>
-
-"Amex debugger Restart
-map <Leader>rr :RdbStop<CR>:Rdebugger 'script/rails s'<CR>
-
 "Syntastic 
 map <Leader>se :Errors<CR>
 map <Leader>sc :SyntasticCheck<CR>
 let g:syntastic_javascript_jsl_conf = $HOME . '/.vim/jsl.conf'
 let g:gist_detect_filetype = 1
 let g:gist_open_browser_after_post = 1
-set clipboard=unnamed
