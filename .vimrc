@@ -32,6 +32,7 @@ Bundle 'vim-scripts/ZenCoding.vim'
 Bundle 'mattn/webapi-vim'
 Bundle 'mattn/gist-vim'
 Bundle 'duff/vim-scratch'
+Bundle 'kien/ctrlp.vim'
 
 " Ruby Related Bundles
 "Bundle 'tpope/vim-rails'
@@ -45,9 +46,9 @@ Bundle 'duff/vim-scratch'
 
 "Bundle 'wincent/Command-T.git'
 " vim-scripts repos
+" Bundle 'FuzzyFinder'
 Bundle 'minibufexpl.vim'
 Bundle 'L9'
-Bundle 'FuzzyFinder'
 
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
@@ -155,3 +156,6 @@ map <Leader>sc :SyntasticCheck<CR>
 let g:syntastic_javascript_jsl_conf = $HOME . '/.vim/jsl.conf'
 let g:gist_detect_filetype = 1
 let g:gist_open_browser_after_post = 1
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_map = '<leader>p'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
