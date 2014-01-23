@@ -12,24 +12,17 @@ Bundle 'gmarik/vundle'
 "
 " original repos on github
 Bundle 'jnurmine/Zenburn'
-Bundle 'scrooloose/nerdtree'
+Bundle 'mattn/emmet-vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-fugitive'
 Bundle 'msanders/snipmate.vim.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-git.git'
-Bundle 'endel/vim-github-colorscheme'
+Bundle 'kien/ctrlp.vim'
 Bundle 'ervandew/supertab.git'
 Bundle 'tjennings/git-grep-vim'
-"Bundle 'vim-scripts/taglist.vim'
-Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/nerdcommenter'
-Bundle 'vim-scripts/ZenCoding.vim'
-Bundle 'mattn/webapi-vim'
-Bundle 'mattn/gist-vim'
-Bundle 'duff/vim-scratch'
-Bundle 'kien/ctrlp.vim'
-Bundle 'skroll/vim-taghighlight'
+Bundle 'scrooloose/nerdtree'
 
 "Bundle 'wincent/Command-T.git'
 " vim-scripts repos
@@ -58,96 +51,50 @@ augroup AutoReloadVimRC
 augroup END
 
 " Statusline Settings
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%{SyntasticStatuslineFlag()}%=%-14.(%l,%c%V%)\ %P
+set laststatus=2
+set statusline=%<%f\ %h%m%r%{SyntasticStatuslineFlag()}%=%-14.(%l,%c%V%)\ %P
 
 " Text settings
 syntax enable
-colors zenburn
-set guifont=Consolas:h21
-let g:zenburn_high_Contrast=1
 set t_Co=256
+let g:zenburn_high_Contrast=1
+colors zenburn
 hi NonText ctermfg=7 guifg=gray
-set listchars=tab:\|\ ,trail:~,extends:>,precedes:<
-set list hls nowrap nu expandtab
-
-" Spacing related settings
-set softtabstop=4 tabstop=4 shiftwidth=4 smarttab smartindent
-
-" Folding
-set foldmethod=indent
-set foldlevel=99
+set list listchars=tab:\T\ ,trail:.,extends:>,precedes:<
+set hls nu wrap
+set softtabstop=2 tabstop=2 shiftwidth=2 expandtab
+set foldmethod=indent foldlevel=99
+set completeopt=menuone,longest,preview
+set omnifunc=syntaxcomplete#Complete
 
 " Gui Options
 set guioptions+=TlLrRbB
 set guioptions-=TlLrRbB
 
-au FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-au BufNewFile,BufRead *.soy set ft=html
+" Command P
+let g:ctrlp_cmd = '<Leader>p'
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(node_modules|git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
 
+" User Mappings
+map <Leader><Tab> :NERDTreeToggle<CR>
+map <Leader>\ :! 
+map <Leader>aa :GitGrep 
+map <Leader>as :GitGrep <cword><CR>
+map <Leader>] :colors morning<CR>
+map <Leader>[ :colors zenburn<CR>
 
 " Sets and Lets
 let g:miniBufExplSplitBelow=0
 let g:miniBufExplMaxSize=0
-let g:SuperTabDefaultCompletionType = "context"
-set completeopt=menuone,longest,preview
 
-" Window Navigation
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-map <c-h> <c-w>h
-
-" User Mappings
-map <Leader>wr :set wrap!<CR>
-map <Leader><Tab> :NERDTreeToggle<CR>
-map <Leader>\ :!
-map <Leader>mm :TMiniBufExplorer<CR>
-map <Leader>aa :GitGrep 
-map <Leader>as :GitGrep <cword><CR>
-map <Leader>sr :call ReloadAllSnippets()<CR>
-map <Leader>e :Vexplore<CR>
-
-" Git Commands
-map <Leader>ga :Gwrite<CR>
-map <Leader>gc :Gcommit<CR>
-map <Leader>gd ::CMiniBufExplorer<CR>Gdiff<CR>
-
-map <Leader>[ :colors Zenburn<CR>:set guifont=Consolas:h21<CR>
-map <Leader>] :colors morning<CR>:set guifont=Consolas:h21<CR>
-
-" Spacing Binds
-map <Leader>ll :set list!<CR>
-map <Leader>oo :set expandtab!<CR>:retab!<CR>:set list!<CR>
-map <Leader>/ :nohls<CR>
-
-" VIM management
-map <Leader>bi :BundleInstall<CR>
-map <Leader>bu :BundleInstall!<CR>
-map <Leader>bc :BundleClean<CR>
-
-"Ctrl+p stuff
-let g:ctrlp_max_files = 0
-let g:ctrlp_max_depth = 100
-let g:ctrlp_working_path_mode = 'raw'
-let g:ctrlp_root_markers = ['.git']
-let g:ctrlp_map = '<leader>p'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,bin,Build,Website/1*
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|node_module|Libraries|lib|bin)$',
-  \ 'file': '\v\.(exe|so|dll)$'
-  \ }
-
-"Syntastic 
-map <Leader>se :Errors<CR>
-map <Leader>sc :SyntasticCheck<CR>
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=1
-let g:syntastic_javascript_jshint_conf = '~/.jshintrc'
-let g:syntastic_javascript_jslint_conf = "--white --undef --nomen --regexp --plusplus --bitwise --newcap --sloppy --vars --move_var"
-let g:syntastic_disabled_filetypes=['html']
-let g:gist_detect_filetype = 1
-let g:gist_open_browser_after_post = 1
-
-"Tag and src viewer
-map <Leader>t :TagbarToggle<CR>
-set tags=./tags;./jstags;/
+" Map ctrl-movement keys to window switching
+map <C-k> <C-w><Up>
+map <C-j> <C-w><Down>
+map <C-l> <C-w><Right>
+map <C-h> <C-w><Left>
